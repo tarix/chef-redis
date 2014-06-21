@@ -41,7 +41,6 @@ action :create do
   end
   create_config
   enable_service
-  new_resource.updated_by_last_action(true)
 end
 
 
@@ -90,7 +89,7 @@ end
 
 def create_config
   redis_service_name = redis_service
-  template "#{new_resource.conf_dir}/#{new_resource.name}.conf" do
+  t = template "#{new_resource.conf_dir}/#{new_resource.name}.conf" do
     source "redis.conf.erb"
     owner "root"
     group "root"
@@ -103,6 +102,7 @@ def create_config
       notifies :restart, "runit_service[#{redis_service_name}]"
     end
   end
+  new_resource.updated_by_last_action(true) if t.updated_by_last_action?
 end
 
 # For RHEL-based installs, to set $REDIS_USER
