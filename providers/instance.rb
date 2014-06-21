@@ -100,6 +100,8 @@ def create_config
       notifies :restart, "service[#{redis_service_name}]"
     when "runit"
       notifies :restart, "runit_service[#{redis_service_name}]"
+    when "upstart"
+      notifies :restart, "service[#{redis_service_name}]"
     end
   end
   new_resource.updated_by_last_action(true) if t.updated_by_last_action?
@@ -144,17 +146,28 @@ def create_service_script
         :user     => new_resource.user
       })
     end
+  when "upstart"
+    t = template "/etc/init/redis-#{new_resource.name}.conf" do
+      source "redis_upstart.erb"
+      owner "root"
+      group "root"
+      mode 0644
+      variables new_resource.to_hash
+    end
+    new_resource.updated_by_last_action(true) if t.updated_by_last_action?
   end
 end
 
 def enable_service
   service redis_service do
+    provider Chef::Provider::Service::Upstart if new_resource.init_style == 'upstart'
     action [ :enable, :start ]
   end
 end
 
 def disable_service
   service redis_service do
+    provider Chef::Provider::Service::Upstart if new_resource.init_style == 'upstart'
     action [ :disable, :stop ]
   end
 end

@@ -1,0 +1,17 @@
+description "redis-server"
+
+setuid redis
+setgid redis
+
+start on local-filesystems
+stop on shutdown
+
+expect fork
+
+respawn
+respawn limit 10 5
+
+env EXEC=<%= node[:redis][:dst_dir] %>/bin/redis-server
+env CONF=<%= @conf_dir %>/<%= @name %>.conf
+
+exec $EXEC $CONF
