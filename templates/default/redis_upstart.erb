@@ -3,8 +3,8 @@ description "redis-server"
 setuid redis
 setgid redis
 
-start on local-filesystems
-stop on shutdown
+start on (local-filesystems and net-device-up IFACE!=lo)
+stop on runlevel [!2345]
 
 expect fork
 
