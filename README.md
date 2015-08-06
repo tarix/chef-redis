@@ -1,5 +1,7 @@
 # DESCRIPTION:
 
+NOTE: This is a fork of miah/chef-redis, please use a supported cookbook from Chef Supermarket.
+
 Installs and configures [Redis](http://redis.io/).
 
 ** NOTE **
@@ -7,7 +9,7 @@ This cookbook does not currently configure or manage Redis replication.
 
 # REQUIREMENTS:
 
-The Redis cookbook has been tested on Ubuntu 10.04, 11.04, 11.10, 12.04, Debian 6.0, and CentOS 5 and 6.
+The Redis cookbook is only being tested on Ubuntu 14.04.
 
 ## Cookbooks:
 

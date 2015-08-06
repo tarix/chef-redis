@@ -1,6 +1,6 @@
-name "redis"
-maintainer       "Miah Johnson"
-maintainer_email "miah@cx.com"
+name             "redis"
+maintainer       "None"
+maintainer_email "None"
 license          "Apache 2.0"
 description      "Installs/configures redis"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
